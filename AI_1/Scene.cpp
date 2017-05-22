@@ -102,10 +102,14 @@ void Scene::update(){
 				//this?
 			}
 
+			double ee = updateE(move, now_player_point_x, now_player_point_y, move_direction);
+
 			/*QílåvéZ*/
 			q_num[now_player_point_y][now_player_point_x][move_direction] =
-				q_num[now_player_point_y][now_player_point_x][move_direction] + ALPHA*(reward + GAMMA*q_num[next_player_point_y][next_player_point_x][q_max]
+				q_num[now_player_point_y][now_player_point_x][move_direction] + ee*ALPHA*(reward + GAMMA*q_num[next_player_point_y][next_player_point_x][q_max]
 				- q_num[now_player_point_y][now_player_point_x][move_direction]);
+
+			//q_num[now_player_point_y][now_player_point_x][move_direction] += ee;
 
 			/*s<-s',a<-a'*/
 			now_player_point_x += vector_x;
@@ -169,7 +173,16 @@ void Scene::setScene(char *c){
 		}
 	}
 
+	this->e_num = new double**[map_size_y];
+	for (int y = 0; y < map_size_y; y++){
+		e_num[y] = new double*[map_size_x];
+		for (int x = 0; x < map_size_x; x++){
+			e_num[y][x] = new double[DIRECTION_NUM];
+		}
+	}
+
 	this->initializeQNum();
+	this->initializeENum();
 }
 
 void Scene::initializeQNum(){
@@ -179,6 +192,25 @@ void Scene::initializeQNum(){
 	for (int d = 0; d < DIRECTION_NUM; d++)
 		q_num[y][x][d] = 0;//rand() % (INITIALIZE_Q_MAX + 1);
 	return;
+}
+
+void Scene::initializeENum(){
+	for (int y = 0; y < map_size_y; y++)
+	for (int x = 0; x < map_size_x; x++)
+	for (int d = 0; d < DIRECTION_NUM; d++)
+	e_num[y][x][d] = 0;//rand() % (INITIALIZE_Q_MAX + 1);
+	return;
+}
+
+double Scene::updateE(int time,int x, int y,int d){
+	if (time == 0)return 0.0;
+	double result = 0.0;
+
+	if (time == 1)result = 1.0*Lamda*GAMMA+1;
+	else
+		result = Lamda*GAMMA*pow(e_num[y][x][d], time - 1)+1;
+
+	return result;
 }
 
 void Scene::readMap(char *c){

@@ -9,7 +9,7 @@
 //#define EPSILON	0.30		//ƒÃ-greedy–@‚ÌƒÃA‚±‚ÌŠ„‡‚Åƒ‰ƒ“ƒ_ƒ€‚ÉˆÚ“®
 //#define ALPHA	0.10		//ŠwK—¦ƒ¿
 //#define GAMMA	0.90		//Š„ˆø—¦ƒÁ
-
+#define Lamda	0.10
 
 
 enum Move_DIRECTION{//ˆÚ“®•ûŒü
@@ -45,6 +45,7 @@ class Scene{
 private:
 	int **map;		//ê‚Ì”z’uŠi”[•Ï”
 	double ***q_num;	//Q’lŠi”[•Ï”
+	double ***e_num;
 	int map_size_x, map_size_y;
 	int now_movement_num;
 
@@ -72,6 +73,8 @@ public:
 	void draw();
 
 	void initializeQNum();
+	void initializeENum();
+	double updateE(int time, int x, int y, int d);
 	void setScene(char *c);
 	void setConstant();
 };

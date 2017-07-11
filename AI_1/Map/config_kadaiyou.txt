@@ -1,0 +1,16 @@
+@EPSILON,              0.30;
+@ALPHA,                0.10;
+@GAMMA,                0.90;
+@INITIALIZE_Q_MAX,     30;
+@MAX_MOVEMENTS_NUM,    50;
+@MAX_SCENE_TRIALNUM,   100000;
+@FILE_OUTPUT_FLAG,     1;
+
+@HOLE_REWARDS,-100;
+@PENALTY_ONESTEP,-1;
+@GOLE_REWARDS,12;
+@èâä˙íl0Å®óêêî
+
+@END,,;
+
+
